@@ -1,3 +1,7 @@
+// ==============================
+// gptHandler.js — Netlify Function
+// ==============================
+
 import fetch from 'node-fetch';
 
 export async function handler(event, context) {
@@ -16,7 +20,7 @@ Brand Vibe: ${details.vibe}.
 Write a short but powerful marketing plan to help them attract clients and win listings.
     `;
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const openaiRes = await fetch('https://api.openai.com/v1/chat/completions', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,19 +36,21 @@ Write a short but powerful marketing plan to help them attract clients and win l
       })
     });
 
-    const data = await response.json();
-
-    if (data.choices && data.choices[0] && data.choices[0].message) {
+    if (!openaiRes.ok) {
+      console.error('OpenAI API error:', await openaiRes.text());
       return {
-        statusCode: 200,
-        body: JSON.stringify({ message: data.choices[0].message.content })
-      };
-    } else {
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ message: "Failed to generate plan." })
+        statusCode: openaiRes.status,
+        body: JSON.stringify({ message: "OpenAI API error." })
       };
     }
+
+    const data = await openaiRes.json();
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ message: data.choices[0].message.content })
+    };
+
   } catch (err) {
     console.error("GPT Handler Error:", err);
     return {
