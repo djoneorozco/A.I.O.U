@@ -2,7 +2,6 @@
 // #1 — Variables & Setup
 // ================================
 let currentQuestion = 0;
-let answers = []; // Store user answers
 
 // MBTI scoring axes
 let scores = {
@@ -39,12 +38,18 @@ function showQuestion() {
   const answersDiv = document.getElementById('answers');
   answersDiv.innerHTML = '';
 
-  q.answers.forEach((ans, index) => {
+  q.answers.forEach((ans) => {
     const btn = document.createElement('button');
     btn.innerText = ans.text;
     btn.onclick = () => selectAnswer(ans);
     answersDiv.appendChild(btn);
   });
+
+  // Optional: Show progress
+  const progressDiv = document.getElementById('progress');
+  if (progressDiv) {
+    progressDiv.innerText = `Question ${currentQuestion + 1} of ${questions.length}`;
+  }
 }
 
 // ================================
@@ -88,14 +93,19 @@ function calculateResult() {
 }
 
 // ================================
-// #6 — GPT Fetch (ONLY runs on results.html)
+// #6 — GPT Fetch & Display on Results Page
 // ================================
 document.addEventListener('DOMContentLoaded', () => {
-  const resultEl = document.getElementById('gptOutput');
-  if (resultEl) {
-    const mbtiResult = localStorage.getItem('mbtiResult') || 'ENTJ';
+  const mbtiTypeEl = document.getElementById('mbtiType');
+  const gptOutputEl = document.getElementById('gptOutput');
 
-    const prompt = `
+  if (mbtiTypeEl) {
+    // Pull saved MBTI result
+    const mbtiResult = localStorage.getItem('mbtiResult') || 'Unknown';
+    mbtiTypeEl.innerText = mbtiResult;
+
+    if (gptOutputEl) {
+      const prompt = `
 You are an Ivy League real estate coach.
 The agent’s MBTI type is ${mbtiResult}.
 Write a 200-word custom marketing plan for this agent.
@@ -107,29 +117,30 @@ Include:
 Be punchy, motivating, Realtor-specific, and share-worthy.
 `;
 
-    fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer YOUR_OPENAI_API_KEY"
-      },
-      body: JSON.stringify({
-        model: "gpt-4o",
-        messages: [
-          { role: "system", content: "You are a helpful assistant." },
-          { role: "user", content: prompt }
-        ],
-        max_tokens: 300
+      fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer YOUR_OPENAI_API_KEY"
+        },
+        body: JSON.stringify({
+          model: "gpt-4o",
+          messages: [
+            { role: "system", content: "You are a helpful assistant." },
+            { role: "user", content: prompt }
+          ],
+          max_tokens: 300
+        })
       })
-    })
-      .then(response => response.json())
-      .then(data => {
-        const aiResponse = data.choices[0].message.content;
-        resultEl.innerText = aiResponse;
-      })
-      .catch(error => {
-        console.error("OpenAI API Error:", error);
-        resultEl.innerText = "Oops! Couldn’t get your plan. Try again.";
-      });
+        .then(response => response.json())
+        .then(data => {
+          const aiResponse = data.choices[0].message.content;
+          gptOutputEl.innerText = aiResponse;
+        })
+        .catch(error => {
+          console.error("OpenAI API Error:", error);
+          gptOutputEl.innerText = "Oops! Couldn’t get your plan. Try again.";
+        });
+    }
   }
 });
