@@ -1,11 +1,15 @@
+/* ============================
+  Quiz Buttons (Likert Scale)
+=============================== */
 .likert-btn {
   display: inline-block;
   margin: 8px;
-  padding: 10px 20px;
+  padding: 12px 24px;
   border: 2px solid #333;
-  border-radius: 20px;
+  border-radius: 30px;
   background: #fff;
   cursor: pointer;
+  font-size: 1rem;
   transition: all 0.2s ease;
 }
 
@@ -14,17 +18,127 @@
   color: #fff;
 }
 
+/* ============================
+  Quiz Layout
+=============================== */
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background: #f8f8f8;
+  color: #333;
+  margin: 0;
+  padding: 40px 20px;
+}
+
+.quiz-container,
+.results-container {
+  max-width: 700px;
+  margin: auto;
+  background: #fff;
+  border-radius: 12px;
+  padding: 50px 40px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+h1 {
+  font-size: 2.2rem;
+  margin-bottom: 5px;
+}
+
+.tagline {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+#question {
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+}
+
 .answers {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-.quiz-container {
-  text-align: center;
+.progress {
+  margin-top: 30px;
+  font-weight: bold;
+  color: #555;
 }
 
-.progress {
-  margin-top: 20px;
+/* ============================
+  Results Page Styling
+=============================== */
+
+.mbti-type,
+.mbti-name {
+  font-size: 2rem;
   font-weight: bold;
+  margin: 15px 0;
+  color: #222;
+}
+
+.mbti-details {
+  text-align: left;
+  background: #f1f1f1;
+  padding: 25px;
+  border-radius: 8px;
+  margin: 30px auto;
+  max-width: 600px;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.mbti-details strong {
+  display: inline-block;
+  width: 140px;
+}
+
+.gpt-output {
+  text-align: left;
+  margin: 30px auto;
+  background: #fafafa;
+  padding: 25px;
+  border-radius: 8px;
+  white-space: pre-wrap;
+  max-width: 700px;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.cta {
+  margin-top: 50px;
+  font-size: 1.1rem;
+}
+
+.cta a {
+  color: #333;
+  text-decoration: underline;
+  margin: 0 10px;
+}
+
+.cta a:hover {
+  color: #000;
+}
+
+/* ============================
+  Mobile Responsiveness
+=============================== */
+@media (max-width: 600px) {
+  .quiz-container,
+  .results-container {
+    padding: 30px 20px;
+  }
+
+  .likert-btn {
+    width: 100%;
+    margin: 6px 0;
+  }
+
+  .mbti-details strong {
+    width: auto;
+    display: block;
+  }
 }
