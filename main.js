@@ -38,14 +38,14 @@ function showQuestion() {
   const answersDiv = document.getElementById('answers');
   answersDiv.innerHTML = '';
 
-  q.answers.forEach((ans) => {
+  q.answers.forEach(ans => {
     const btn = document.createElement('button');
     btn.innerText = ans.text;
+    btn.classList.add('likert-btn'); // for styling
     btn.onclick = () => selectAnswer(ans);
     answersDiv.appendChild(btn);
   });
 
-  // Optional: Show progress
   const progressDiv = document.getElementById('progress');
   if (progressDiv) {
     progressDiv.innerText = `Question ${currentQuestion + 1} of ${questions.length}`;
@@ -56,8 +56,13 @@ function showQuestion() {
 // #4 — Handle Answer Selection
 // ================================
 function selectAnswer(answer) {
-  // Increment relevant MBTI axis
-  scores[answer.axis] += answer.value;
+  // If value is positive, it goes to axis, negative goes to the opposite
+  if (answer.value > 0) {
+    scores[answer.axis] += answer.value;
+  } else if (answer.value < 0) {
+    const opposite = getOppositeAxis(answer.axis);
+    scores[opposite] += Math.abs(answer.value);
+  }
 
   currentQuestion++;
 
@@ -74,33 +79,42 @@ function selectAnswer(answer) {
 function calculateResult() {
   let mbti = '';
 
-  // E vs I
   mbti += scores.E >= scores.I ? 'E' : 'I';
-  // S vs N
   mbti += scores.S >= scores.N ? 'S' : 'N';
-  // T vs F
   mbti += scores.T >= scores.F ? 'T' : 'F';
-  // J vs P
   mbti += scores.J >= scores.P ? 'J' : 'P';
 
   console.log('MBTI Result:', mbti);
 
-  // Save MBTI to localStorage so results.html can read it
   localStorage.setItem('mbtiResult', mbti);
-
-  // Redirect to results page
   window.location.href = 'results.html';
 }
 
 // ================================
-// #6 — GPT Fetch & Display on Results Page
+// #6 — Opposite Axis Helper
+// ================================
+function getOppositeAxis(axis) {
+  switch (axis) {
+    case 'E': return 'I';
+    case 'I': return 'E';
+    case 'S': return 'N';
+    case 'N': return 'S';
+    case 'T': return 'F';
+    case 'F': return 'T';
+    case 'J': return 'P';
+    case 'P': return 'J';
+    default: return axis;
+  }
+}
+
+// ================================
+// #7 — GPT Fetch & Display on Results Page
 // ================================
 document.addEventListener('DOMContentLoaded', () => {
   const mbtiTypeEl = document.getElementById('mbtiType');
   const gptOutputEl = document.getElementById('gptOutput');
 
   if (mbtiTypeEl) {
-    // Pull saved MBTI result
     const mbtiResult = localStorage.getItem('mbtiResult') || 'Unknown';
     mbtiTypeEl.innerText = mbtiResult;
 
