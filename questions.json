@@ -1,58 +1,42 @@
 [
   {
-    "question": "When you get a hot new listing lead, do you:",
+    "question": "I prefer to reach out to new leads immediately rather than wait.",
     "answers": [
-      { "text": "Call them immediately and start a conversation", "axis": "E", "value": 1 },
-      { "text": "Do research first and plan your strategy", "axis": "I", "value": 1 }
+      { "text": "Strongly Disagree", "axis": "E", "value": -2 },
+      { "text": "Disagree", "axis": "E", "value": -1 },
+      { "text": "Neutral", "axis": "E", "value": 0 },
+      { "text": "Agree", "axis": "E", "value": 1 },
+      { "text": "Strongly Agree", "axis": "E", "value": 2 }
     ]
   },
   {
-    "question": "Your client wants to see 5 houses in one day. You prefer to:",
+    "question": "I rely on concrete facts more than intuition when advising clients.",
     "answers": [
-      { "text": "Stick to an organized schedule, all details in advance", "axis": "J", "value": 1 },
-      { "text": "Stay flexible — adjust plans as you go", "axis": "P", "value": 1 }
+      { "text": "Strongly Disagree", "axis": "S", "value": -2 },
+      { "text": "Disagree", "axis": "S", "value": -1 },
+      { "text": "Neutral", "axis": "S", "value": 0 },
+      { "text": "Agree", "axis": "S", "value": 1 },
+      { "text": "Strongly Agree", "axis": "S", "value": 2 }
     ]
   },
   {
-    "question": "When showing a fixer-upper, you:",
+    "question": "I tend to make decisions based on logic rather than emotions.",
     "answers": [
-      { "text": "Emphasize the design potential and vision", "axis": "N", "value": 1 },
-      { "text": "Focus on facts and practical repairs needed", "axis": "S", "value": 1 }
+      { "text": "Strongly Disagree", "axis": "T", "value": -2 },
+      { "text": "Disagree", "axis": "T", "value": -1 },
+      { "text": "Neutral", "axis": "T", "value": 0 },
+      { "text": "Agree", "axis": "T", "value": 1 },
+      { "text": "Strongly Agree", "axis": "T", "value": 2 }
     ]
   },
   {
-    "question": "How do you build trust with clients?",
+    "question": "I prefer to plan my work well in advance rather than stay flexible.",
     "answers": [
-      { "text": "By showing empathy and understanding their story", "axis": "F", "value": 1 },
-      { "text": "By giving clear data and professional analysis", "axis": "T", "value": 1 }
-    ]
-  },
-  {
-    "question": "At an open house, you feel energized by:",
-    "answers": [
-      { "text": "Meeting and chatting with lots of people", "axis": "E", "value": 1 },
-      { "text": "One-on-one, deeper conversations", "axis": "I", "value": 1 }
-    ]
-  },
-  {
-    "question": "When making your marketing plan for a listing, you:",
-    "answers": [
-      { "text": "Stick to proven strategies that always work", "axis": "S", "value": 1 },
-      { "text": "Try new ideas to stand out in the market", "axis": "N", "value": 1 }
-    ]
-  },
-  {
-    "question": "You’re negotiating a deal. Do you:",
-    "answers": [
-      { "text": "Push hard for your client’s best interests, no matter what", "axis": "T", "value": 1 },
-      { "text": "Look for a win-win that makes everyone feel good", "axis": "F", "value": 1 }
-    ]
-  },
-  {
-    "question": "When your week is fully booked, you prefer:",
-    "answers": [
-      { "text": "Having a tight schedule with set appointments", "axis": "J", "value": 1 },
-      { "text": "Keeping options open for surprises", "axis": "P", "value": 1 }
+      { "text": "Strongly Disagree", "axis": "J", "value": -2 },
+      { "text": "Disagree", "axis": "J", "value": -1 },
+      { "text": "Neutral", "axis": "J", "value": 0 },
+      { "text": "Agree", "axis": "J", "value": 1 },
+      { "text": "Strongly Agree", "axis": "J", "value": 2 }
     ]
   }
 ]
