@@ -20,6 +20,16 @@
     ]
   },
   {
+    "question": "I believe my style and personal appearance help me get more leads than just numbers alone.",
+    "answers": [
+      { "text": "Strongly Disagree", "axis": "E", "value": -2 },
+      { "text": "Disagree", "axis": "E", "value": -1 },
+      { "text": "Neutral", "axis": "E", "value": 0 },
+      { "text": "Agree", "axis": "E", "value": 1 },
+      { "text": "Strongly Agree", "axis": "E", "value": 2 }
+    ]
+  },
+  {
     "question": "I recharge best by spending time alone or in quiet reflection.",
     "answers": [
       { "text": "Strongly Disagree", "axis": "I", "value": -2 },
@@ -51,16 +61,6 @@
   },
   {
     "question": "I rely on concrete facts more than intuition when advising clients.",
-    "answers": [
-      { "text": "Strongly Disagree", "axis": "S", "value": -2 },
-      { "text": "Disagree", "axis": "S", "value": -1 },
-      { "text": "Neutral", "axis": "S", "value": 0 },
-      { "text": "Agree", "axis": "S", "value": 1 },
-      { "text": "Strongly Agree", "axis": "S", "value": 2 }
-    ]
-  },
-  {
-    "question": "Details and clear facts are more important to me than broad ideas.",
     "answers": [
       { "text": "Strongly Disagree", "axis": "S", "value": -2 },
       { "text": "Disagree", "axis": "S", "value": -1 },
