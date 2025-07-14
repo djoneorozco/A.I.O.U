@@ -10,7 +10,57 @@
     ]
   },
   {
+    "question": "I gain energy from meeting new people and expanding my network.",
+    "answers": [
+      { "text": "Strongly Disagree", "axis": "E", "value": -2 },
+      { "text": "Disagree", "axis": "E", "value": -1 },
+      { "text": "Neutral", "axis": "E", "value": 0 },
+      { "text": "Agree", "axis": "E", "value": 1 },
+      { "text": "Strongly Agree", "axis": "E", "value": 2 }
+    ]
+  },
+  {
+    "question": "I recharge best by spending time alone or in quiet reflection.",
+    "answers": [
+      { "text": "Strongly Disagree", "axis": "I", "value": -2 },
+      { "text": "Disagree", "axis": "I", "value": -1 },
+      { "text": "Neutral", "axis": "I", "value": 0 },
+      { "text": "Agree", "axis": "I", "value": 1 },
+      { "text": "Strongly Agree", "axis": "I", "value": 2 }
+    ]
+  },
+  {
+    "question": "I focus on big-picture market trends rather than individual facts.",
+    "answers": [
+      { "text": "Strongly Disagree", "axis": "N", "value": -2 },
+      { "text": "Disagree", "axis": "N", "value": -1 },
+      { "text": "Neutral", "axis": "N", "value": 0 },
+      { "text": "Agree", "axis": "N", "value": 1 },
+      { "text": "Strongly Agree", "axis": "N", "value": 2 }
+    ]
+  },
+  {
+    "question": "I trust my gut feelings when advising a client on offers.",
+    "answers": [
+      { "text": "Strongly Disagree", "axis": "N", "value": -2 },
+      { "text": "Disagree", "axis": "N", "value": -1 },
+      { "text": "Neutral", "axis": "N", "value": 0 },
+      { "text": "Agree", "axis": "N", "value": 1 },
+      { "text": "Strongly Agree", "axis": "N", "value": 2 }
+    ]
+  },
+  {
     "question": "I rely on concrete facts more than intuition when advising clients.",
+    "answers": [
+      { "text": "Strongly Disagree", "axis": "S", "value": -2 },
+      { "text": "Disagree", "axis": "S", "value": -1 },
+      { "text": "Neutral", "axis": "S", "value": 0 },
+      { "text": "Agree", "axis": "S", "value": 1 },
+      { "text": "Strongly Agree", "axis": "S", "value": 2 }
+    ]
+  },
+  {
+    "question": "Details and clear facts are more important to me than broad ideas.",
     "answers": [
       { "text": "Strongly Disagree", "axis": "S", "value": -2 },
       { "text": "Disagree", "axis": "S", "value": -1 },
@@ -30,6 +80,36 @@
     ]
   },
   {
+    "question": "I remain objective, even when clients are emotional.",
+    "answers": [
+      { "text": "Strongly Disagree", "axis": "T", "value": -2 },
+      { "text": "Disagree", "axis": "T", "value": -1 },
+      { "text": "Neutral", "axis": "T", "value": 0 },
+      { "text": "Agree", "axis": "T", "value": 1 },
+      { "text": "Strongly Agree", "axis": "T", "value": 2 }
+    ]
+  },
+  {
+    "question": "My decisions are guided more by empathy than pure logic.",
+    "answers": [
+      { "text": "Strongly Disagree", "axis": "F", "value": -2 },
+      { "text": "Disagree", "axis": "F", "value": -1 },
+      { "text": "Neutral", "axis": "F", "value": 0 },
+      { "text": "Agree", "axis": "F", "value": 1 },
+      { "text": "Strongly Agree", "axis": "F", "value": 2 }
+    ]
+  },
+  {
+    "question": "I adjust my approach to make clients feel understood.",
+    "answers": [
+      { "text": "Strongly Disagree", "axis": "F", "value": -2 },
+      { "text": "Disagree", "axis": "F", "value": -1 },
+      { "text": "Neutral", "axis": "F", "value": 0 },
+      { "text": "Agree", "axis": "F", "value": 1 },
+      { "text": "Strongly Agree", "axis": "F", "value": 2 }
+    ]
+  },
+  {
     "question": "I prefer to plan my work well in advance rather than stay flexible.",
     "answers": [
       { "text": "Strongly Disagree", "axis": "J", "value": -2 },
@@ -37,6 +117,66 @@
       { "text": "Neutral", "axis": "J", "value": 0 },
       { "text": "Agree", "axis": "J", "value": 1 },
       { "text": "Strongly Agree", "axis": "J", "value": 2 }
+    ]
+  },
+  {
+    "question": "I feel most productive with clear deadlines and structure.",
+    "answers": [
+      { "text": "Strongly Disagree", "axis": "J", "value": -2 },
+      { "text": "Disagree", "axis": "J", "value": -1 },
+      { "text": "Neutral", "axis": "J", "value": 0 },
+      { "text": "Agree", "axis": "J", "value": 1 },
+      { "text": "Strongly Agree", "axis": "J", "value": 2 }
+    ]
+  },
+  {
+    "question": "I like to keep my options open until the last moment.",
+    "answers": [
+      { "text": "Strongly Disagree", "axis": "P", "value": -2 },
+      { "text": "Disagree", "axis": "P", "value": -1 },
+      { "text": "Neutral", "axis": "P", "value": 0 },
+      { "text": "Agree", "axis": "P", "value": 1 },
+      { "text": "Strongly Agree", "axis": "P", "value": 2 }
+    ]
+  },
+  {
+    "question": "I thrive in situations that require adaptability.",
+    "answers": [
+      { "text": "Strongly Disagree", "axis": "P", "value": -2 },
+      { "text": "Disagree", "axis": "P", "value": -1 },
+      { "text": "Neutral", "axis": "P", "value": 0 },
+      { "text": "Agree", "axis": "P", "value": 1 },
+      { "text": "Strongly Agree", "axis": "P", "value": 2 }
+    ]
+  },
+  {
+    "question": "I naturally take the lead when working with other agents.",
+    "answers": [
+      { "text": "Strongly Disagree", "axis": "E", "value": -2 },
+      { "text": "Disagree", "axis": "E", "value": -1 },
+      { "text": "Neutral", "axis": "E", "value": 0 },
+      { "text": "Agree", "axis": "E", "value": 1 },
+      { "text": "Strongly Agree", "axis": "E", "value": 2 }
+    ]
+  },
+  {
+    "question": "I enjoy exploring unconventional marketing ideas.",
+    "answers": [
+      { "text": "Strongly Disagree", "axis": "N", "value": -2 },
+      { "text": "Disagree", "axis": "N", "value": -1 },
+      { "text": "Neutral", "axis": "N", "value": 0 },
+      { "text": "Agree", "axis": "N", "value": 1 },
+      { "text": "Strongly Agree", "axis": "N", "value": 2 }
+    ]
+  },
+  {
+    "question": "I prefer sticking to tried-and-true methods over experimenting.",
+    "answers": [
+      { "text": "Strongly Disagree", "axis": "S", "value": -2 },
+      { "text": "Disagree", "axis": "S", "value": -1 },
+      { "text": "Neutral", "axis": "S", "value": 0 },
+      { "text": "Agree", "axis": "S", "value": 1 },
+      { "text": "Strongly Agree", "axis": "S", "value": 2 }
     ]
   }
 ]
