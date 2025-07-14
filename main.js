@@ -95,7 +95,7 @@ function getOppositeAxis(axis) {
 }
 
 // ================================
-// #7 — Results: GPT Fetch to Netlify Function
+// #7 — Results: Call Netlify Function
 // ================================
 document.addEventListener('DOMContentLoaded', () => {
   const mbtiTypeEl = document.getElementById('mbtiType');
@@ -126,6 +126,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (gptOutputEl) {
     fetch('/.netlify/functions/gptHandler', {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         mbti: mbtiResult,
         details
