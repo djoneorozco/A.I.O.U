@@ -4,11 +4,9 @@
 let currentQuestion = 0;
 
 // MBTI scoring axes
-let scores = {
-  I: 0, E: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0
-};
+let scores = { I: 0, E: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
 
-// Archetype Matrix (16 Realtor-focused types)
+// Archetype Matrix
 const mbtiMap = {
   "ENTJ": { name: "The Commander Agent", strength: "Leadership, bold deal-making", market: "Luxury investors, big developers", priceRange: "High-end, 7-figure +", area: "Urban luxury", vibe: "Bold, high-contrast, status" },
   "INTJ": { name: "The Visionary Agent", strength: "Strategy, long-term planning", market: "Commercial & mixed-use buyers", priceRange: "Large portfolios", area: "Growth corridors", vibe: "Sleek, minimal, sophisticated" },
@@ -34,19 +32,15 @@ const mbtiMap = {
 let questions = [];
 fetch('questions.json')
   .then(res => res.json())
-  .then(data => {
-    questions = data;
-    showQuestion();
-  })
+  .then(data => { questions = data; showQuestion(); })
   .catch(err => console.error('Error loading questions:', err));
 
 // ================================
-// #3 — Show Current Question
+// #3 — Show Question
 // ================================
 function showQuestion() {
   const q = questions[currentQuestion];
   document.getElementById('question').innerText = q.question;
-
   const answersDiv = document.getElementById('answers');
   answersDiv.innerHTML = '';
 
@@ -59,31 +53,23 @@ function showQuestion() {
   });
 
   const progressDiv = document.getElementById('progress');
-  if (progressDiv) {
-    progressDiv.innerText = `Question ${currentQuestion + 1} of ${questions.length}`;
-  }
+  if (progressDiv) progressDiv.innerText = `Question ${currentQuestion + 1} of ${questions.length}`;
 }
 
 // ================================
-// #4 — Handle Answer Selection
+// #4 — Handle Answer
 // ================================
 function selectAnswer(answer) {
-  if (answer.value > 0) {
-    scores[answer.axis] += answer.value;
-  } else if (answer.value < 0) {
-    scores[getOppositeAxis(answer.axis)] += Math.abs(answer.value);
-  }
+  if (answer.value > 0) scores[answer.axis] += answer.value;
+  else scores[getOppositeAxis(answer.axis)] += Math.abs(answer.value);
 
   currentQuestion++;
-  if (currentQuestion < questions.length) {
-    showQuestion();
-  } else {
-    calculateResult();
-  }
+  if (currentQuestion < questions.length) showQuestion();
+  else calculateResult();
 }
 
 // ================================
-// #5 — Calculate Final MBTI
+// #5 — Calculate MBTI
 // ================================
 function calculateResult() {
   let mbti = '';
@@ -98,7 +84,7 @@ function calculateResult() {
 }
 
 // ================================
-// #6 — Opposite Axis Helper
+// #6 — Opposite Axis
 // ================================
 function getOppositeAxis(axis) {
   switch (axis) {
@@ -111,7 +97,7 @@ function getOppositeAxis(axis) {
 }
 
 // ================================
-// #7 — Results Page Logic: GPT + Flyer
+// #7 — Results: GPT + Flyer
 // ================================
 document.addEventListener('DOMContentLoaded', () => {
   const mbtiTypeEl = document.getElementById('mbtiType');
@@ -121,7 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const flyerEl = document.getElementById('archetypeFlyer');
 
   const mbtiResult = localStorage.getItem('mbtiResult') || 'Unknown';
-
   if (mbtiTypeEl) mbtiTypeEl.innerText = mbtiResult;
 
   const details = mbtiMap[mbtiResult] || {
@@ -179,7 +164,7 @@ Write a 200-word custom marketing plan to help this Realtor attract their ideal 
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer YOUR_OPENAI_API_KEY"
+        "Authorization": "Bearer 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"
       },
       body: JSON.stringify({
         model: "gpt-4o",
@@ -191,9 +176,7 @@ Write a 200-word custom marketing plan to help this Realtor attract their ideal 
       })
     })
     .then(res => res.json())
-    .then(data => {
-      gptOutputEl.innerText = data.choices[0].message.content;
-    })
+    .then(data => { gptOutputEl.innerText = data.choices[0].message.content; })
     .catch(err => {
       console.error("OpenAI API Error:", err);
       gptOutputEl.innerText = "Oops! Couldn’t get your plan. Try again.";
