@@ -150,17 +150,17 @@
     ]
   },
   {
-    "question": "I naturally take the lead when working with other agents.",
+    "question": "I naturally take the lead on tough negotiations.",
     "answers": [
-      { "text": "Strongly Disagree", "axis": "E", "value": -2 },
-      { "text": "Disagree", "axis": "E", "value": -1 },
-      { "text": "Neutral", "axis": "E", "value": 0 },
-      { "text": "Agree", "axis": "E", "value": 1 },
-      { "text": "Strongly Agree", "axis": "E", "value": 2 }
+      { "text": "Strongly Disagree", "axis": "T", "value": -2 },
+      { "text": "Disagree", "axis": "T", "value": -1 },
+      { "text": "Neutral", "axis": "T", "value": 0 },
+      { "text": "Agree", "axis": "T", "value": 1 },
+      { "text": "Strongly Agree", "axis": "T", "value": 2 }
     ]
   },
   {
-    "question": "I enjoy exploring unconventional marketing ideas.",
+    "question": "I enjoy exploring unconventional marketing ideas for listings.",
     "answers": [
       { "text": "Strongly Disagree", "axis": "N", "value": -2 },
       { "text": "Disagree", "axis": "N", "value": -1 },
@@ -170,7 +170,47 @@
     ]
   },
   {
-    "question": "I prefer sticking to tried-and-true methods over experimenting.",
+    "question": "I prefer sticking to proven methods over experimenting.",
+    "answers": [
+      { "text": "Strongly Disagree", "axis": "S", "value": -2 },
+      { "text": "Disagree", "axis": "S", "value": -1 },
+      { "text": "Neutral", "axis": "S", "value": 0 },
+      { "text": "Agree", "axis": "S", "value": 1 },
+      { "text": "Strongly Agree", "axis": "S", "value": 2 }
+    ]
+  },
+  {
+    "question": "I am comfortable taking risks if I believe in a property's potential.",
+    "answers": [
+      { "text": "Strongly Disagree", "axis": "N", "value": -2 },
+      { "text": "Disagree", "axis": "N", "value": -1 },
+      { "text": "Neutral", "axis": "N", "value": 0 },
+      { "text": "Agree", "axis": "N", "value": 1 },
+      { "text": "Strongly Agree", "axis": "N", "value": 2 }
+    ]
+  },
+  {
+    "question": "I stand my ground firmly when representing a client's best interests.",
+    "answers": [
+      { "text": "Strongly Disagree", "axis": "T", "value": -2 },
+      { "text": "Disagree", "axis": "T", "value": -1 },
+      { "text": "Neutral", "axis": "T", "value": 0 },
+      { "text": "Agree", "axis": "T", "value": 1 },
+      { "text": "Strongly Agree", "axis": "T", "value": 2 }
+    ]
+  },
+  {
+    "question": "I feel energized by hosting community events to meet potential clients.",
+    "answers": [
+      { "text": "Strongly Disagree", "axis": "E", "value": -2 },
+      { "text": "Disagree", "axis": "E", "value": -1 },
+      { "text": "Neutral", "axis": "E", "value": 0 },
+      { "text": "Agree", "axis": "E", "value": 1 },
+      { "text": "Strongly Agree", "axis": "E", "value": 2 }
+    ]
+  },
+  {
+    "question": "I enjoy handling unexpected issues on a property myself.",
     "answers": [
       { "text": "Strongly Disagree", "axis": "S", "value": -2 },
       { "text": "Disagree", "axis": "S", "value": -1 },
