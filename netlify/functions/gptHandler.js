@@ -2,8 +2,6 @@
 // gptHandler.js — Netlify Function
 // ==============================
 
-import fetch from 'node-fetch';
-
 export async function handler(event, context) {
   try {
     const { mbti, details } = JSON.parse(event.body);
