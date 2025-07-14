@@ -15,6 +15,138 @@ let scores = {
   P: 0
 };
 
+// Archetype Matrix (16 Realtor-focused types)
+const mbtiMap = {
+  "ENTJ": {
+    name: "The Commander Agent",
+    strength: "Leadership, bold deal-making",
+    market: "Luxury investors, big developers",
+    priceRange: "High-end, 7-figure +",
+    area: "Urban luxury",
+    vibe: "Bold, high-contrast, status"
+  },
+  "INTJ": {
+    name: "The Visionary Agent",
+    strength: "Strategy, long-term planning",
+    market: "Commercial & mixed-use buyers",
+    priceRange: "Large portfolios",
+    area: "Growth corridors",
+    vibe: "Sleek, minimal, sophisticated"
+  },
+  "ENTP": {
+    name: "The Disruptor Agent",
+    strength: "Innovative, challenger mindset",
+    market: "First-time investors, flips",
+    priceRange: "Mid-high, value deals",
+    area: "Up-and-coming",
+    vibe: "Trendy, punchy, modern"
+  },
+  "INTP": {
+    name: "The Strategist Agent",
+    strength: "Analytical, problem-solving",
+    market: "Data-driven buyers, remote buyers",
+    priceRange: "Any, but value-driven",
+    area: "Suburban, niche",
+    vibe: "Neutral, clean, data-focused"
+  },
+  "ENFJ": {
+    name: "The Advocate Agent",
+    strength: "Inspiring, relationship-driven",
+    market: "Young families, relocators",
+    priceRange: "Middle to high",
+    area: "Family suburbs",
+    vibe: "Warm, inviting, community"
+  },
+  "INFJ": {
+    name: "The Advisor Agent",
+    strength: "Empathy, trusted confidante",
+    market: "Seniors, downsizers",
+    priceRange: "Middle range",
+    area: "Established neighborhoods",
+    vibe: "Soft, timeless, trust-rich"
+  },
+  "ENFP": {
+    name: "The Connector Agent",
+    strength: "Outgoing, social, big sphere",
+    market: "Lifestyle buyers, relocators",
+    priceRange: "Mid-high, unique homes",
+    area: "Artsy districts",
+    vibe: "Playful, colorful, casual"
+  },
+  "INFP": {
+    name: "The Heartfelt Agent",
+    strength: "Authentic, story-driven",
+    market: "First-time buyers, life transitions",
+    priceRange: "Entry to middle",
+    area: "Historic or cozy",
+    vibe: "Whimsical, vintage, soulful"
+  },
+  "ESTJ": {
+    name: "The Rainmaker Agent",
+    strength: "Organized, process-driven",
+    market: "Investors, rental portfolios",
+    priceRange: "Mid-high, multi-units",
+    area: "Urban core",
+    vibe: "Strong, structured, bold"
+  },
+  "ISTJ": {
+    name: "The Analyst Agent",
+    strength: "Diligent, detail-focused",
+    market: "Repeat buyers, military moves",
+    priceRange: "Any, steady volume",
+    area: "Anywhere stable",
+    vibe: "Conservative, clean, reliable"
+  },
+  "ESTP": {
+    name: "The Closer Agent",
+    strength: "Bold, action-oriented",
+    market: "Fix/Flip investors, time-sensitive",
+    priceRange: "Bargain to mid",
+    area: "Flips, distressed",
+    vibe: "Flashy, direct, energetic"
+  },
+  "ISTP": {
+    name: "The Fixer Agent",
+    strength: "Hands-on, practical",
+    market: "Contractors, DIY investors",
+    priceRange: "Bargain to mid",
+    area: "Older homes, fixers",
+    vibe: "Rugged, industrial, DIY"
+  },
+  "ESFJ": {
+    name: "The Community Agent",
+    strength: "Connector, well-known locally",
+    market: "Neighborhood families, repeat clients",
+    priceRange: "Middle range",
+    area: "Tight-knit suburbs",
+    vibe: "Friendly, approachable, local"
+  },
+  "ISFJ": {
+    name: "The Nurturer Agent",
+    strength: "Patient, caring, word-of-mouth",
+    market: "Seniors, single parents, VA buyers",
+    priceRange: "Entry to mid",
+    area: "Suburban or rural",
+    vibe: "Soft, trust-based, pastel"
+  },
+  "ESFP": {
+    name: "The Networker Agent",
+    strength: "Social butterfly, event-driven",
+    market: "Lifestyle buyers, relocators",
+    priceRange: "Any, flashy homes",
+    area: "Trendy neighborhoods",
+    vibe: "Bold colors, big photos, fun"
+  },
+  "ISFP": {
+    name: "The Lifestyle Agent",
+    strength: "Creative, design-oriented",
+    market: "Boutique buyers, second homes",
+    priceRange: "Mid-high, unique properties",
+    area: "Arts districts, retreats",
+    vibe: "Artsy, elegant, curated"
+  }
+};
+
 // ================================
 // #2 — Load Questions from JSON
 // ================================
@@ -41,7 +173,7 @@ function showQuestion() {
   q.answers.forEach(ans => {
     const btn = document.createElement('button');
     btn.innerText = ans.text;
-    btn.classList.add('likert-btn'); // for styling
+    btn.classList.add('likert-btn');
     btn.onclick = () => selectAnswer(ans);
     answersDiv.appendChild(btn);
   });
@@ -56,7 +188,6 @@ function showQuestion() {
 // #4 — Handle Answer Selection
 // ================================
 function selectAnswer(answer) {
-  // If value is positive, it goes to axis, negative goes to the opposite
   if (answer.value > 0) {
     scores[answer.axis] += answer.value;
   } else if (answer.value < 0) {
@@ -87,6 +218,7 @@ function calculateResult() {
   console.log('MBTI Result:', mbti);
 
   localStorage.setItem('mbtiResult', mbti);
+
   window.location.href = 'results.html';
 }
 
@@ -95,40 +227,55 @@ function calculateResult() {
 // ================================
 function getOppositeAxis(axis) {
   switch (axis) {
-    case 'E': return 'I';
-    case 'I': return 'E';
-    case 'S': return 'N';
-    case 'N': return 'S';
-    case 'T': return 'F';
-    case 'F': return 'T';
-    case 'J': return 'P';
-    case 'P': return 'J';
+    case 'E': return 'I'; case 'I': return 'E';
+    case 'S': return 'N'; case 'N': return 'S';
+    case 'T': return 'F'; case 'F': return 'T';
+    case 'J': return 'P'; case 'P': return 'J';
     default: return axis;
   }
 }
 
 // ================================
-// #7 — GPT Fetch & Display on Results Page
+// #7 — GPT Fetch + Archetype on Results Page
 // ================================
 document.addEventListener('DOMContentLoaded', () => {
   const mbtiTypeEl = document.getElementById('mbtiType');
+  const archetypeNameEl = document.getElementById('mbtiName');
+  const archetypeDetailsEl = document.getElementById('mbtiDetails');
   const gptOutputEl = document.getElementById('gptOutput');
 
   if (mbtiTypeEl) {
     const mbtiResult = localStorage.getItem('mbtiResult') || 'Unknown';
     mbtiTypeEl.innerText = mbtiResult;
 
+    const details = mbtiMap[mbtiResult] || {
+      name: "Unknown",
+      strength: "—",
+      market: "—",
+      priceRange: "—",
+      area: "—",
+      vibe: "—"
+    };
+
+    archetypeNameEl.innerText = details.name;
+    archetypeDetailsEl.innerHTML = `
+      <strong>Strength:</strong> ${details.strength}<br>
+      <strong>Market:</strong> ${details.market}<br>
+      <strong>Price Range:</strong> ${details.priceRange}<br>
+      <strong>Area:</strong> ${details.area}<br>
+      <strong>Vibe:</strong> ${details.vibe}
+    `;
+
     if (gptOutputEl) {
       const prompt = `
 You are an Ivy League real estate coach.
-The agent’s MBTI type is ${mbtiResult}.
-Write a 200-word custom marketing plan for this agent.
-Include:
-- Best-fit target market
-- Lead generation channels
-- Social media style
-- Brand colors & vibe.
-Be punchy, motivating, Realtor-specific, and share-worthy.
+The agent’s MBTI type is ${mbtiResult} — ${details.name}.
+Core Strength: ${details.strength}.
+Target Market: ${details.market}.
+Price Range Sweet Spot: ${details.priceRange}.
+Best Area: ${details.area}.
+Brand Vibe: ${details.vibe}.
+Write a 200-word custom marketing plan to help this Realtor attract their ideal clients and own their niche. Keep it Realtor-specific, status-driven, and actionable.
 `;
 
       fetch("https://api.openai.com/v1/chat/completions", {
@@ -143,7 +290,7 @@ Be punchy, motivating, Realtor-specific, and share-worthy.
             { role: "system", content: "You are a helpful assistant." },
             { role: "user", content: prompt }
           ],
-          max_tokens: 300
+          max_tokens: 400
         })
       })
         .then(response => response.json())
