@@ -3,10 +3,8 @@
 // ================================
 let currentQuestion = 0;
 
-// MBTI scoring axes
 let scores = { I: 0, E: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
 
-// Archetype Matrix — Realtor-focused
 const mbtiMap = {
   "ENTJ": { name: "The Commander Agent", strength: "Leadership, bold deal-making", market: "Luxury investors, big developers", priceRange: "High-end, 7-figure +", area: "Urban luxury", vibe: "Bold, high-contrast, status" },
   "INTJ": { name: "The Visionary Agent", strength: "Strategy, long-term planning", market: "Commercial & mixed-use buyers", priceRange: "Large portfolios", area: "Growth corridors", vibe: "Sleek, minimal, sophisticated" },
@@ -27,7 +25,7 @@ const mbtiMap = {
 };
 
 // ================================
-// #2 — Load Questions from JSON
+// #2 — Load Questions
 // ================================
 let questions = [];
 fetch('questions.json')
@@ -36,7 +34,7 @@ fetch('questions.json')
   .catch(err => console.error('Error loading questions:', err));
 
 // ================================
-// #3 — Show Current Question
+// #3 — Show Question
 // ================================
 function showQuestion() {
   const q = questions[currentQuestion];
@@ -97,7 +95,7 @@ function getOppositeAxis(axis) {
 }
 
 // ================================
-// #7 — Results: GPT + Flyer + New Passcode “ListingLock”
+// #7 — Results: GPT Fetch to Netlify Function
 // ================================
 document.addEventListener('DOMContentLoaded', () => {
   const mbtiTypeEl = document.getElementById('mbtiType');
@@ -109,12 +107,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const mbtiResult = localStorage.getItem('mbtiResult') || 'Unknown';
   if (mbtiTypeEl) mbtiTypeEl.innerText = mbtiResult;
 
-  const details = mbtiMap[mbtiResult] || {
-    name: "Unknown", strength: "—", market: "—", priceRange: "—", area: "—", vibe: "—"
-  };
-
+  const details = mbtiMap[mbtiResult] || { name: "Unknown", strength: "—", market: "—", priceRange: "—", area: "—", vibe: "—" };
   if (archetypeNameEl) archetypeNameEl.innerText = details.name;
-
   if (archetypeDetailsEl) {
     archetypeDetailsEl.innerHTML = `
       <strong>Strength:</strong> ${details.strength}<br>
@@ -124,65 +118,26 @@ document.addEventListener('DOMContentLoaded', () => {
       <strong>Vibe:</strong> ${details.vibe}
     `;
   }
-
   if (flyerEl) {
-    const flyerMap = {
-      ENTJ: 'images/ENTJ.png',
-      INTJ: 'images/INTJ.png',
-      ENTP: 'images/ENTP.png',
-      INTP: 'images/INTP.png',
-      ENFJ: 'images/ENFJ.png',
-      INFJ: 'images/INFJ.png',
-      ENFP: 'images/ENFP.png',
-      INFP: 'images/INFP.png',
-      ESTJ: 'images/ESTJ.png',
-      ISTJ: 'images/ISTJ.png',
-      ESTP: 'images/ESTP.png',
-      ISTP: 'images/ISTP.png',
-      ESFJ: 'images/ESFJ.png',
-      ISFJ: 'images/ISFJ.png',
-      ESFP: 'images/ESFP.png',
-      ISFP: 'images/ISFP.png'
-    };
-    flyerEl.src = flyerMap[mbtiResult] || 'images/default.png';
+    flyerEl.src = `images/${mbtiResult}.png`;
     flyerEl.alt = `${mbtiResult} Realtor Flyer`;
   }
 
   if (gptOutputEl) {
-    const prompt = `
-You are an Ivy League real estate coach.
-Secret Passcode: ListingLock.
-The agent’s MBTI type is ${mbtiResult} — ${details.name}.
-Core Strength: ${details.strength}.
-Target Market: ${details.market}.
-Price Range Sweet Spot: ${details.priceRange}.
-Best Area: ${details.area}.
-Brand Vibe: ${details.vibe}.
-Write a short but powerful marketing plan to help them attract clients and win listings.
-`;
-
-    fetch("https://api.openai.com/v1/chat/completions", {
+    fetch('/.netlify/functions/gptHandler', {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer YOUR_OPENAI_API_KEY"
-      },
       body: JSON.stringify({
-        model: "gpt-4o",
-        messages: [
-          { role: "system", content: "You are a helpful assistant." },
-          { role: "user", content: prompt }
-        ],
-        max_tokens: 400
+        mbti: mbtiResult,
+        details
       })
     })
-    .then(res => res.json())
-    .then(data => {
-      gptOutputEl.innerText = data.choices?.[0]?.message?.content || "No plan generated.";
-    })
-    .catch(err => {
-      console.error("OpenAI API Error:", err);
-      gptOutputEl.innerText = "Oops! Couldn’t get your plan. Try again.";
-    });
+      .then(res => res.json())
+      .then(data => {
+        gptOutputEl.innerText = data.message || "No plan generated.";
+      })
+      .catch(err => {
+        console.error("Serverless Function Error:", err);
+        gptOutputEl.innerText = "Oops! Couldn’t get your plan. Try again.";
+      });
   }
 });
