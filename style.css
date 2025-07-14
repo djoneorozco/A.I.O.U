@@ -1,1 +1,39 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f8f8f8;
+  color: #333;
+  text-align: center;
+  padding: 50px;
+}
 
+.quiz-container {
+  max-width: 600px;
+  margin: auto;
+  background: #fff;
+  border-radius: 8px;
+  padding: 40px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.answers button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #333;
+  border-radius: 5px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.answers button:hover {
+  background: #333;
+  color: #fff;
+}
+
+.progress {
+  margin-top: 20px;
+  font-weight: bold;
+}
