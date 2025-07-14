@@ -6,7 +6,7 @@ let currentQuestion = 0;
 // MBTI scoring axes
 let scores = { I: 0, E: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
 
-// Archetype Matrix
+// Archetype Matrix — Realtor-focused
 const mbtiMap = {
   "ENTJ": { name: "The Commander Agent", strength: "Leadership, bold deal-making", market: "Luxury investors, big developers", priceRange: "High-end, 7-figure +", area: "Urban luxury", vibe: "Bold, high-contrast, status" },
   "INTJ": { name: "The Visionary Agent", strength: "Strategy, long-term planning", market: "Commercial & mixed-use buyers", priceRange: "Large portfolios", area: "Growth corridors", vibe: "Sleek, minimal, sophisticated" },
@@ -27,7 +27,7 @@ const mbtiMap = {
 };
 
 // ================================
-// #2 — Load Questions
+// #2 — Load Questions from JSON
 // ================================
 let questions = [];
 fetch('questions.json')
@@ -36,14 +36,14 @@ fetch('questions.json')
   .catch(err => console.error('Error loading questions:', err));
 
 // ================================
-// #3 — Show Question
+// #3 — Show Current Question
 // ================================
 function showQuestion() {
   const q = questions[currentQuestion];
   document.getElementById('question').innerText = q.question;
+
   const answersDiv = document.getElementById('answers');
   answersDiv.innerHTML = '';
-
   q.answers.forEach(ans => {
     const btn = document.createElement('button');
     btn.innerText = ans.text;
@@ -97,7 +97,7 @@ function getOppositeAxis(axis) {
 }
 
 // ================================
-// #7 — Results: GPT + Flyer
+// #7 — Results: GPT + Flyer + New Passcode “ListingLock”
 // ================================
 document.addEventListener('DOMContentLoaded', () => {
   const mbtiTypeEl = document.getElementById('mbtiType');
@@ -151,21 +151,21 @@ document.addEventListener('DOMContentLoaded', () => {
   if (gptOutputEl) {
     const prompt = `
 You are an Ivy League real estate coach.
+Secret Passcode: ListingLock.
 The agent’s MBTI type is ${mbtiResult} — ${details.name}.
 Core Strength: ${details.strength}.
 Target Market: ${details.market}.
 Price Range Sweet Spot: ${details.priceRange}.
 Best Area: ${details.area}.
 Brand Vibe: ${details.vibe}.
-Write a 200-word custom marketing plan to help this Realtor attract their ideal clients and own their niche. Keep it Realtor-specific, status-driven, and actionable.
+Write a short but powerful marketing plan to help them attract clients and win listings.
 `;
 
     fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
-      mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer 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"
+        "Authorization": "Bearer YOUR_OPENAI_API_KEY"
       },
       body: JSON.stringify({
         model: "gpt-4o",
@@ -177,7 +177,9 @@ Write a 200-word custom marketing plan to help this Realtor attract their ideal 
       })
     })
     .then(res => res.json())
-    .then(data => { gptOutputEl.innerText = data.choices[0].message.content; })
+    .then(data => {
+      gptOutputEl.innerText = data.choices?.[0]?.message?.content || "No plan generated.";
+    })
     .catch(err => {
       console.error("OpenAI API Error:", err);
       gptOutputEl.innerText = "Oops! Couldn’t get your plan. Try again.";
