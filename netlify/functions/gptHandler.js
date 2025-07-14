@@ -1,22 +1,52 @@
 // ==============================
-// gptHandler.js — Netlify Function
+// gptHandler.js — Netlify Function (IVY 2.99 Edition)
 // ==============================
+
+import fetch from 'node-fetch';
 
 export async function handler(event, context) {
   try {
     const { mbti, details } = JSON.parse(event.body);
 
     const prompt = `
-You are an Ivy League real estate coach.
-Secret Passcode: ListingLock.
-The agent’s MBTI type is ${mbti} — ${details.name}.
-Core Strength: ${details.strength}.
-Target Market: ${details.market}.
-Price Range Sweet Spot: ${details.priceRange}.
-Best Area: ${details.area}.
-Brand Vibe: ${details.vibe}.
-Write a short but powerful marketing plan to help them attract clients and win listings.
-    `;
+You are an elite real estate marketing strategist trained by Fortune 500 CMOs, with a secret Passcode: ListingLock.
+
+You coach real estate agents using advanced buyer psychology and archetype branding.
+
+**Realtor Archetype:** ${mbti} — ${details.name}
+**Core Strength:** ${details.strength}
+**Target Market:** ${details.market}
+**Price Range:** ${details.priceRange}
+**Best Area:** ${details.area}
+**Brand Vibe:** ${details.vibe}
+
+Your task is to craft an *exceptional, high-level marketing plan* that makes the agent feel unstoppable.
+
+**Your output MUST INCLUDE:**
+
+1️⃣ **Psychological Summary (250–300 words):**  
+- Explain the deeper mindset of this type.
+- Show how their unique strengths position them as an authority.
+- Highlight the emotions and client desires they naturally tap into.
+
+2️⃣ **Personal Brand & Social Strategy:**  
+- Recommend a powerful brand identity (tone, colors, style) that matches their type.
+- Suggest unique content pillars and formats for social media.
+- Provide practical daily/weekly content ideas they can post to dominate their niche.
+
+3️⃣ **Marketing Campaigns & Partnerships:**  
+- Recommend 3 specific, realistic campaign ideas for the next 90 days.
+- Detail networking tactics, partnership outreach scripts, or event ideas to build trust with ideal clients.
+- Include next steps the agent can do *this week* to get momentum.
+
+**Guidelines:**  
+- Keep it direct and actionable — no fluff.  
+- Use bold headings, short paragraphs, bullet points.  
+- Think like an Ivy League coach + $10M marketing consultant.  
+- Make the agent feel ready to conquer their niche.
+
+Return only the final plan. No disclaimers.
+`;
 
     const openaiRes = await fetch('https://api.openai.com/v1/chat/completions', {
       method: "POST",
@@ -27,10 +57,10 @@ Write a short but powerful marketing plan to help them attract clients and win l
       body: JSON.stringify({
         model: "gpt-4o",
         messages: [
-          { role: "system", content: "You are a helpful assistant." },
+          { role: "system", content: "You are an Ivy League real estate marketing expert." },
           { role: "user", content: prompt }
         ],
-        max_tokens: 400
+        max_tokens: 800
       })
     });
 
