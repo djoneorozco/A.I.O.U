@@ -1,36 +1,27 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #f8f8f8;
-  color: #333;
-  text-align: center;
-  padding: 50px;
-}
-
-.quiz-container {
-  max-width: 600px;
-  margin: auto;
-  background: #fff;
-  border-radius: 8px;
-  padding: 40px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.answers button {
-  display: block;
-  width: 100%;
-  margin: 10px 0;
-  padding: 12px;
-  font-size: 16px;
+.likert-btn {
+  display: inline-block;
+  margin: 8px;
+  padding: 10px 20px;
   border: 2px solid #333;
-  border-radius: 5px;
+  border-radius: 20px;
   background: #fff;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.answers button:hover {
+.likert-btn:hover {
   background: #333;
   color: #fff;
+}
+
+.answers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.quiz-container {
+  text-align: center;
 }
 
 .progress {
