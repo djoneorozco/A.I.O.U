@@ -162,6 +162,7 @@ Write a 200-word custom marketing plan to help this Realtor attract their ideal 
 
     fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
+      mode: "cors",
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer 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"
