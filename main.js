@@ -30,11 +30,33 @@ const mbtiMap = {
 let questions = [];
 fetch('questions.json')
   .then(res => res.json())
-  .then(data => { questions = data; showQuestion(); })
+  .then(data => { questions = data; })
   .catch(err => console.error('Error loading questions:', err));
 
 // ================================
-// #3 — Show Question
+// #3 — Start Quiz Button
+// ================================
+document.getElementById('startQuizBtn').addEventListener('click', () => {
+  const userData = {
+    city: document.getElementById('city').value.trim(),
+    experience: document.getElementById('experience').value.trim(),
+    buyerPersona: document.getElementById('buyerPersona').value.trim(),
+    currentCommissions: document.getElementById('currentCommissions').value.trim(),
+    targetCommissions: document.getElementById('targetCommissions').value.trim(),
+    biggestChallenge: document.getElementById('biggestChallenge').value.trim(),
+    niche: document.getElementById('niche').value.trim(),
+  };
+
+  localStorage.setItem('customFields', JSON.stringify(userData));
+
+  document.getElementById('customFields').style.display = 'none';
+  document.getElementById('quizSection').style.display = 'block';
+
+  showQuestion();
+});
+
+// ================================
+// #4 — Show Question
 // ================================
 function showQuestion() {
   const q = questions[currentQuestion];
@@ -55,7 +77,7 @@ function showQuestion() {
 }
 
 // ================================
-// #4 — Handle Answer
+// #5 — Handle Answer
 // ================================
 function selectAnswer(answer) {
   if (answer.value > 0) scores[answer.axis] += answer.value;
@@ -67,7 +89,7 @@ function selectAnswer(answer) {
 }
 
 // ================================
-// #5 — Calculate MBTI
+// #6 — Calculate MBTI
 // ================================
 function calculateResult() {
   let mbti = '';
@@ -82,7 +104,7 @@ function calculateResult() {
 }
 
 // ================================
-// #6 — Opposite Axis
+// #7 — Opposite Axis
 // ================================
 function getOppositeAxis(axis) {
   switch (axis) {
@@ -95,7 +117,7 @@ function getOppositeAxis(axis) {
 }
 
 // ================================
-// #7 — Results: Load Flyer + Call Netlify Function
+// #8 — Results: Load Flyer + Plan
 // ================================
 document.addEventListener('DOMContentLoaded', () => {
   const mbtiTypeEl = document.getElementById('mbtiType');
