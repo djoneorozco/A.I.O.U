@@ -6,6 +6,17 @@ export async function handler(event, context) {
   try {
     const { mbti, details, customFields } = JSON.parse(event.body);
 
+    // Fallbacks just to be extra robust
+    const realtorProfile = {
+      city: customFields?.city || "Not specified",
+      experience: customFields?.experience || "Not specified",
+      buyerPersona: customFields?.buyerPersona || "Not specified",
+      currentCommissions: customFields?.currentCommissions || "Not specified",
+      targetCommissions: customFields?.targetCommissions || "Not specified",
+      biggestChallenge: customFields?.biggestChallenge || "Not specified",
+      niche: customFields?.niche || "Not specified",
+    };
+
     const prompt = `
 You are an elite real estate marketing strategist trained by Fortune 500 CMOs.
 Secret Passcode: ListingLock.
@@ -18,13 +29,13 @@ Best Area: ${details.area}
 Brand Vibe: ${details.vibe}
 
 **Realtor Profile:**
-- City/Primary Market: ${customFields?.city || "Not specified"}
-- Years of Experience: ${customFields?.experience || "Not specified"}
-- Target Buyer Persona: ${customFields?.buyerPersona || "Not specified"}
-- Current Average Annual Gross Commissions: ${customFields?.currentCommissions || "Not specified"}
-- 2-Year Target Gross Commissions: ${customFields?.targetCommissions || "Not specified"}
-- Biggest Current Business Challenge: ${customFields?.biggestChallenge || "Not specified"}
-- Niche: ${customFields?.niche || "Not specified"}
+- City/Primary Market: ${realtorProfile.city}
+- Years of Experience: ${realtorProfile.experience}
+- Target Buyer Persona: ${realtorProfile.buyerPersona}
+- Current Average Annual Gross Commissions: ${realtorProfile.currentCommissions}
+- 2-Year Target Gross Commissions: ${realtorProfile.targetCommissions}
+- Biggest Current Business Challenge: ${realtorProfile.biggestChallenge}
+- Niche: ${realtorProfile.niche}
 
 Your task is to craft an exceptional, advanced marketing plan that makes the agent feel unstoppable.
 
