@@ -126,20 +126,20 @@ h1 {
 /* ============================
   Flyer Render Animation
 =============================== */
-.fade-in-top {
-  opacity: 0;
-  transform: translateY(-20px);
-  animation: fadeInTop 5s ease forwards;
+.flyer-image {
+  max-width: 100%;
+  margin: 20px 0;
+  display: block;
+  overflow: hidden;
+  animation: revealDown 5s ease forwards;
 }
 
-@keyframes fadeInTop {
-  0% {
-    opacity: 0;
-    transform: translateY(-20px);
+@keyframes revealDown {
+  from {
+    clip-path: inset(0 0 100% 0);
   }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
+  to {
+    clip-path: inset(0 0 0 0);
   }
 }
 
