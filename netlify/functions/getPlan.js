@@ -12,10 +12,13 @@ export async function handler(event) {
       };
     }
 
-    // ✅ Use .md not .mb
+    // ✅ Ensure it matches your plans folder and uses .md files
     const planPath = path.join(process.cwd(), 'plans', `${mbti}.md`);
 
+    console.log("Looking for plan at:", planPath);
+
     if (!fs.existsSync(planPath)) {
+      console.warn(`Plan for ${mbti} not found.`);
       return {
         statusCode: 404,
         body: "Plan not found."
@@ -31,7 +34,7 @@ export async function handler(event) {
     };
 
   } catch (err) {
-    console.error("Error:", err);
+    console.error("getPlan.js Error:", err);
     return {
       statusCode: 500,
       body: "Server error."
