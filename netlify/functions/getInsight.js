@@ -1,59 +1,39 @@
-// ==============================
-// getInsight.js — Netlify Function (IVY 2.99)
-// ==============================
-
-import { readFileSync, existsSync } from 'fs';
+import fs from 'fs';
 import path from 'path';
 
-export async function handler(event, context) {
+export async function handler(event) {
   try {
-    const { mbti, details, customFields } = JSON.parse(event.body || '{}');
+    const { mbti, details, customFields } = JSON.parse(event.body);
 
-    if (!mbti) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ insight: '', plan: '', message: "No MBTI provided." })
-      };
-    }
-
-    // ============================
-    // #1 — Load Static Plan (.md)
-    // ============================
+    // 📁 Read static plan (.md)
     const planPath = path.join(process.cwd(), 'plans', `${mbti}.md`);
-    let plan = "Plan not found.";
-
-    if (existsSync(planPath)) {
-      plan = readFileSync(planPath, 'utf-8');
+    let staticPlan = "Not found.";
+    if (fs.existsSync(planPath)) {
+      staticPlan = fs.readFileSync(planPath, 'utf-8');
     }
 
-    // ============================
-    // #2 — Generate AI Insight
-    // ============================
+    // 🧠 Build dynamic insight prompt
     const prompt = `
-You are an elite Fortune 500 real estate strategist.
-
+You are an elite real estate marketing strategist trained by Fortune 500 CMOs.
 Secret Passcode: ListingLock.
 
-**MBTI Realtor Archetype:** ${mbti} — ${details.name}
+Realtor Archetype: ${mbti} — ${details.name}
 Core Strength: ${details.strength}
 Target Market: ${details.market}
 Price Range: ${details.priceRange}
-Area: ${details.area}
+Best Area: ${details.area}
 Brand Vibe: ${details.vibe}
 
-**Custom Realtor Profile:**
+**Realtor Profile:**
 - City/Primary Market: ${customFields?.city || "Not specified"}
 - Years of Experience: ${customFields?.experience || "Not specified"}
-- Buyer Persona: ${customFields?.buyerPersona || "Not specified"}
-- Current Gross Commissions: ${customFields?.currentCommissions || "Not specified"}
-- 2-Year Target Commissions: ${customFields?.targetCommissions || "Not specified"}
-- Current Business Challenge: ${customFields?.biggestChallenge || "Not specified"}
+- Target Buyer Persona: ${customFields?.buyerPersona || "Not specified"}
+- Current Average Annual Gross Commissions: ${customFields?.currentCommissions || "Not specified"}
+- 2-Year Target Gross Commissions: ${customFields?.targetCommissions || "Not specified"}
+- Biggest Current Business Challenge: ${customFields?.biggestChallenge || "Not specified"}
 - Niche: ${customFields?.niche || "Not specified"}
 
-👉 Your task:
-- Provide a **1-paragraph summary** of how this custom business info aligns with the Realtor’s MBTI archetype.
-- Then deliver a clear **Action Plan** that gives them 3-5 steps they can implement to overcome their biggest challenge and achieve their 2-year target.
-- Be direct, realistic, and use bullet points.
+Craft a short, real-world **Summary** and **Action Plan** describing how these custom fields affect the agent's path, and give real advice to help them reach their 2-year goal. Be concise, punchy, direct.
 `;
 
     const openaiRes = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -65,35 +45,37 @@ Brand Vibe: ${details.vibe}
       body: JSON.stringify({
         model: "gpt-4o",
         messages: [
-          { role: "system", content: "You are an Ivy League real estate strategist." },
+          { role: "system", content: "You are an Ivy League real estate marketing expert." },
           { role: "user", content: prompt }
         ],
-        max_tokens: 600
+        max_tokens: 700
       })
     });
 
     if (!openaiRes.ok) {
       const errText = await openaiRes.text();
-      console.error("OpenAI Error:", errText);
+      console.error("OpenAI API error:", errText);
       return {
         statusCode: openaiRes.status,
-        body: JSON.stringify({ insight: '', plan, message: "OpenAI API error.", detail: errText })
+        body: JSON.stringify({ message: "OpenAI API error.", detail: errText })
       };
     }
 
     const data = await openaiRes.json();
-    const insight = data.choices[0].message.content || "No insight generated.";
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ insight, plan })
+      body: JSON.stringify({
+        insight: data.choices[0].message.content,
+        plan: staticPlan
+      })
     };
 
   } catch (err) {
-    console.error("getInsight Handler Error:", err);
+    console.error("Insight Handler Error:", err);
     return {
       statusCode: 500,
-      body: JSON.stringify({ insight: '', plan: '', message: "Server error.", detail: err.toString() })
+      body: JSON.stringify({ message: "Server error.", detail: err.toString() })
     };
   }
 }
