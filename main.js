@@ -34,26 +34,29 @@ fetch('questions.json')
   .catch(err => console.error('Error loading questions:', err));
 
 // ================================
-// #3 — Start Quiz Button
+// #3 — Start Quiz Button (Safe Guard)
 // ================================
-document.getElementById('startQuizBtn').addEventListener('click', () => {
-  const userData = {
-    city: document.getElementById('city').value.trim(),
-    experience: document.getElementById('experience').value.trim(),
-    buyerPersona: document.getElementById('buyerPersona').value.trim(),
-    currentCommissions: document.getElementById('currentCommissions').value.trim(),
-    targetCommissions: document.getElementById('targetCommissions').value.trim(),
-    biggestChallenge: document.getElementById('biggestChallenge').value.trim(),
-    niche: document.getElementById('niche').value.trim(),
-  };
+const startQuizBtn = document.getElementById('startQuizBtn');
+if (startQuizBtn) {
+  startQuizBtn.addEventListener('click', () => {
+    const userData = {
+      city: document.getElementById('city').value.trim(),
+      experience: document.getElementById('experience').value.trim(),
+      buyerPersona: document.getElementById('buyerPersona').value.trim(),
+      currentCommissions: document.getElementById('currentCommissions').value.trim(),
+      targetCommissions: document.getElementById('targetCommissions').value.trim(),
+      biggestChallenge: document.getElementById('biggestChallenge').value.trim(),
+      niche: document.getElementById('niche').value.trim(),
+    };
 
-  localStorage.setItem('customFields', JSON.stringify(userData));
+    localStorage.setItem('customFields', JSON.stringify(userData));
 
-  document.getElementById('customFields').style.display = 'none';
-  document.getElementById('quizSection').style.display = 'block';
+    document.getElementById('customFields').style.display = 'none';
+    document.getElementById('quizSection').style.display = 'block';
 
-  showQuestion();
-});
+    showQuestion();
+  });
+}
 
 // ================================
 // #4 — Show Question
