@@ -95,7 +95,7 @@ function getOppositeAxis(axis) {
 }
 
 // ================================
-// #7 — Results: Load Flyer + Serve Plan from Netlify Function
+// #7 — Results: Load Flyer + Call Netlify Function
 // ================================
 document.addEventListener('DOMContentLoaded', () => {
   const mbtiTypeEl = document.getElementById('mbtiType');
