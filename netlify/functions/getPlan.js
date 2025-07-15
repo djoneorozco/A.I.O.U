@@ -12,8 +12,8 @@ export async function handler(event) {
       };
     }
 
-    // Ensure path is correct relative to serverless build output
-    const planPath = path.join(process.cwd(), 'plans', `${mbti}.mb`);
+    // ✅ Use .md not .mb
+    const planPath = path.join(process.cwd(), 'plans', `${mbti}.md`);
 
     if (!fs.existsSync(planPath)) {
       return {
