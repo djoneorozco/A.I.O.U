@@ -12,29 +12,29 @@ export async function handler(event) {
       };
     }
 
-    // ✅ Ensure it matches your plans folder and uses .md files
+    // 🔑 Uses .mb extension — adjust if needed
     const planPath = path.join(process.cwd(), 'plans', `${mbti}.mb`);
-
-    console.log("Looking for plan at:", planPath);
+    console.log(`Looking for plan file at: ${planPath}`);
 
     if (!fs.existsSync(planPath)) {
-      console.warn(`Plan for ${mbti} not found.`);
+      console.warn(`Plan for ${mbti} not found at ${planPath}`);
       return {
         statusCode: 404,
         body: "Plan not found."
       };
     }
 
-    const plan = fs.readFileSync(planPath, 'utf-8');
+    const planContent = fs.readFileSync(planPath, 'utf-8');
+    console.log(`✅ Successfully loaded ${mbti}.mb, size: ${planContent.length} bytes`);
 
     return {
       statusCode: 200,
-      headers: { "Content-Type": "text/plain" },
-      body: plan
+      headers: { "Content-Type": "text/plain; charset=utf-8" },
+      body: planContent
     };
 
   } catch (err) {
-    console.error("getPlan.js Error:", err);
+    console.error("🔥 getPlan.js Error:", err);
     return {
       statusCode: 500,
       body: "Server error."
