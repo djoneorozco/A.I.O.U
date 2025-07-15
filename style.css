@@ -1,54 +1,55 @@
 /* ============================
-  Quiz Buttons (Likert Scale)
-=============================== */
-.likert-btn {
-  display: inline-block;
-  margin: 8px;
-  padding: 12px 24px;
-  border: 2px solid #333;
-  border-radius: 30px;
-  background: #fff;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: all 0.2s ease;
-}
-
-.likert-btn:hover {
-  background: #333;
-  color: #fff;
-}
-
-/* ============================
-  Quiz Layout
+  Global Body & Background
 =============================== */
 body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background: #f8f8f8;
-  color: #333;
+  background: radial-gradient(ellipse at top, rgba(128,0,255,0.15), transparent),
+              radial-gradient(ellipse at bottom, rgba(128,0,255,0.15), black);
+  background-color: #000;
+  color: #eee;
   margin: 0;
   padding: 40px 20px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
 
+/* ============================
+  Shared Container Styles
+=============================== */
 .quiz-container,
 .results-container {
-  max-width: 700px;
-  margin: auto;
-  background: #fff;
-  border-radius: 12px;
+  max-width: 800px;
+  width: 100%;
+  margin: 40px auto;
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  backdrop-filter: blur(16px) brightness(1.1);
+  box-shadow: 0 0 60px rgba(128, 0, 255, 0.15),
+              0 0 20px rgba(255, 255, 255, 0.05);
   padding: 50px 40px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
   text-align: center;
 }
 
+/* ============================
+  Headings & Tagline
+=============================== */
 h1 {
-  font-size: 2.2rem;
+  font-size: 2.5rem;
   margin-bottom: 5px;
 }
 
 .tagline {
   font-size: 1.1rem;
-  color: #666;
+  color: #ccc;
   margin-bottom: 30px;
+}
+
+h2 {
+  font-size: 1.3rem;
+  margin-bottom: 20px;
 }
 
 #question {
@@ -56,35 +57,100 @@ h1 {
   margin-bottom: 20px;
 }
 
-.answers {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+/* ============================
+  Quiz Buttons (Likert Scale)
+=============================== */
+.likert-btn {
+  display: block;
+  width: 50%;
+  max-width: 400px;
+  margin: 10px auto;
+  padding: 14px 24px;
+  border: 2px solid #7f00ff;
+  border-radius: 30px;
+  background: #111;
+  color: #eee;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
 }
 
-.progress {
+.likert-btn:hover {
+  background: #7f00ff;
+  color: #fff;
+  border-color: #7f00ff;
+}
+
+/* ============================
+  Pre-Quiz Inputs & CTA Button
+=============================== */
+label {
+  display: block;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  border: 1px solid #444;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #eee;
+}
+
+button {
+  background: linear-gradient(135deg, #7f00ff, #e100ff);
+  color: #fff;
+  border: none;
+  padding: 14px 30px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 1rem;
+  width: 50%;
+  max-width: 300px;
+  display: block;
+  margin: 30px auto 0 auto;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  filter: brightness(1.2);
+}
+
+/* ============================
+  Answers Container & Progress
+=============================== */
+.answers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#progress {
   margin-top: 30px;
   font-weight: bold;
-  color: #555;
+  color: #aaa;
 }
 
 /* ============================
   Results Page Styling
 =============================== */
-
 .mbti-type,
 .mbti-name {
   font-size: 2rem;
   font-weight: bold;
   margin: 15px 0;
-  color: #222;
+  color: #eee;
 }
 
 .mbti-details {
   text-align: left;
-  background: #f1f1f1;
+  background: rgba(255, 255, 255, 0.05);
   padding: 25px;
-  border-radius: 8px;
+  border-radius: 12px;
   margin: 30px auto;
   max-width: 600px;
   font-size: 1rem;
@@ -99,9 +165,9 @@ h1 {
 .gpt-output {
   text-align: left;
   margin: 30px auto;
-  background: #fafafa;
+  background: rgba(255, 255, 255, 0.05);
   padding: 25px;
-  border-radius: 8px;
+  border-radius: 12px;
   white-space: pre-wrap;
   max-width: 700px;
   font-size: 1rem;
@@ -114,13 +180,13 @@ h1 {
 }
 
 .cta a {
-  color: #333;
+  color: #eee;
   text-decoration: underline;
   margin: 0 10px;
 }
 
 .cta a:hover {
-  color: #000;
+  color: #fff;
 }
 
 /* ============================
@@ -133,12 +199,15 @@ h1 {
   }
 
   .likert-btn {
-    width: 100%;
-    margin: 6px 0;
+    width: 80%;
   }
 
   .mbti-details strong {
     width: auto;
     display: block;
+  }
+
+  button {
+    width: 80%;
   }
 }
