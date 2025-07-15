@@ -120,12 +120,13 @@ function getOppositeAxis(axis) {
 }
 
 // ================================
-// #8 — Results: Load Flyer + AI Plan (Custom Fields)
+// #8 — Results: Load Flyer + AI Insight + Static Plan
 // ================================
 document.addEventListener('DOMContentLoaded', () => {
   const mbtiTypeEl = document.getElementById('mbtiType');
   const archetypeNameEl = document.getElementById('mbtiName');
   const archetypeDetailsEl = document.getElementById('mbtiDetails');
+  const aiInsightOutputEl = document.getElementById('aiInsightOutput');
   const gptOutputEl = document.getElementById('gptOutput');
   const flyerEl = document.getElementById('archetypeFlyer');
 
@@ -149,10 +150,10 @@ document.addEventListener('DOMContentLoaded', () => {
     flyerEl.alt = `${mbtiResult} Realtor Flyer`;
   }
 
-  if (gptOutputEl) {
-    const customFields = JSON.parse(localStorage.getItem('customFields') || '{}');
+  const customFields = JSON.parse(localStorage.getItem('customFields') || '{}');
 
-    fetch('/.netlify/functions/gptHandler', {
+  if (aiInsightOutputEl && gptOutputEl) {
+    fetch('/.netlify/functions/getInsight', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -163,11 +164,13 @@ document.addEventListener('DOMContentLoaded', () => {
     })
       .then(res => res.json())
       .then(data => {
-        gptOutputEl.innerText = data.message || "No plan generated.";
+        aiInsightOutputEl.innerText = data.insight || "No insight generated.";
+        gptOutputEl.innerText = data.plan || "No plan found.";
       })
       .catch(err => {
-        console.error("GPT Handler Error:", err);
-        gptOutputEl.innerText = "Oops! Couldn’t get your plan. Try again.";
+        console.error("Insight/Plan Load Error:", err);
+        aiInsightOutputEl.innerText = "Oops! Couldn’t load your insight.";
+        gptOutputEl.innerText = "Oops! Couldn’t load your plan.";
       });
   }
 });
