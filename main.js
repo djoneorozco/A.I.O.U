@@ -95,7 +95,7 @@ function getOppositeAxis(axis) {
 }
 
 // ================================
-// #7 — Results: Call Netlify Function
+// #7 — Results: Load Flyer + Static Plan
 // ================================
 document.addEventListener('DOMContentLoaded', () => {
   const mbtiTypeEl = document.getElementById('mbtiType');
@@ -118,29 +118,21 @@ document.addEventListener('DOMContentLoaded', () => {
       <strong>Vibe:</strong> ${details.vibe}
     `;
   }
+
   if (flyerEl) {
     flyerEl.src = `images/${mbtiResult}.png`;
     flyerEl.alt = `${mbtiResult} Realtor Flyer`;
   }
 
   if (gptOutputEl) {
-    fetch('/.netlify/functions/gptHandler', {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        mbti: mbtiResult,
-        details
-      })
-    })
-      .then(res => res.json())
+    fetch(`plans/${mbtiResult}.md`)
+      .then(res => res.text())
       .then(data => {
-        gptOutputEl.innerText = data.message || "No plan generated.";
+        gptOutputEl.innerText = data;
       })
       .catch(err => {
-        console.error("Serverless Function Error:", err);
-        gptOutputEl.innerText = "Oops! Couldn’t get your plan. Try again.";
+        console.error("Plan Load Error:", err);
+        gptOutputEl.innerText = "Oops! Couldn’t load your plan. Try again.";
       });
   }
 });
