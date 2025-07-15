@@ -34,7 +34,7 @@ fetch('questions.json')
   .catch(err => console.error('Error loading questions:', err));
 
 // ================================
-// #3 — Start Quiz Button (Safe Guard)
+// #3 — Start Quiz Button
 // ================================
 const startQuizBtn = document.getElementById('startQuizBtn');
 if (startQuizBtn) {
@@ -48,12 +48,9 @@ if (startQuizBtn) {
       biggestChallenge: document.getElementById('biggestChallenge').value.trim(),
       niche: document.getElementById('niche').value.trim(),
     };
-
     localStorage.setItem('customFields', JSON.stringify(userData));
-
     document.getElementById('customFields').style.display = 'none';
     document.getElementById('quizSection').style.display = 'block';
-
     showQuestion();
   });
 }
@@ -64,7 +61,6 @@ if (startQuizBtn) {
 function showQuestion() {
   const q = questions[currentQuestion];
   document.getElementById('question').innerText = q.question;
-
   const answersDiv = document.getElementById('answers');
   answersDiv.innerHTML = '';
   q.answers.forEach(ans => {
@@ -74,7 +70,6 @@ function showQuestion() {
     btn.onclick = () => selectAnswer(ans);
     answersDiv.appendChild(btn);
   });
-
   const progressDiv = document.getElementById('progress');
   if (progressDiv) progressDiv.innerText = `Question ${currentQuestion + 1} of ${questions.length}`;
 }
@@ -85,7 +80,6 @@ function showQuestion() {
 function selectAnswer(answer) {
   if (answer.value > 0) scores[answer.axis] += answer.value;
   else scores[getOppositeAxis(answer.axis)] += Math.abs(answer.value);
-
   currentQuestion++;
   if (currentQuestion < questions.length) showQuestion();
   else calculateResult();
@@ -100,7 +94,6 @@ function calculateResult() {
   mbti += scores.S >= scores.N ? 'S' : 'N';
   mbti += scores.T >= scores.F ? 'T' : 'F';
   mbti += scores.J >= scores.P ? 'J' : 'P';
-
   console.log('MBTI Result:', mbti);
   localStorage.setItem('mbtiResult', mbti);
   window.location.href = 'results.html';
@@ -120,7 +113,7 @@ function getOppositeAxis(axis) {
 }
 
 // ================================
-// #8 — Results: Load Flyer + AI Insight + Static Plan
+// #8 — Results: Insight + Static Plan
 // ================================
 document.addEventListener('DOMContentLoaded', () => {
   const mbtiTypeEl = document.getElementById('mbtiType');
@@ -137,7 +130,6 @@ document.addEventListener('DOMContentLoaded', () => {
     name: "Unknown", strength: "—", market: "—",
     priceRange: "—", area: "—", vibe: "—"
   };
-
   if (archetypeNameEl) archetypeNameEl.innerText = details.name;
   if (archetypeDetailsEl) {
     archetypeDetailsEl.innerHTML = `
@@ -148,7 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
       <strong>Vibe:</strong> ${details.vibe}
     `;
   }
-
   if (flyerEl) {
     flyerEl.src = `images/${mbtiResult}.png`;
     flyerEl.alt = `${mbtiResult} Realtor Flyer`;
@@ -156,27 +147,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const customFields = JSON.parse(localStorage.getItem('customFields') || '{}');
 
-  if (insightOutputEl && planOutputEl) {
-    console.log("Fetching getInsight with:", { mbtiResult, details, customFields });
-    fetch('/.netlify/functions/getInsight', {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        mbti: mbtiResult,
-        details,
-        customFields
-      })
+  // ✅ Call getInsight for dynamic
+  fetch('/.netlify/functions/getInsight', {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ mbti: mbtiResult, details, customFields })
+  })
+    .then(res => res.json())
+    .then(data => {
+      console.log("getInsight returned:", data);
+      insightOutputEl.innerText = data.insight || "No insight generated.";
     })
-      .then(res => res.json())
-      .then(data => {
-        console.log("getInsight returned:", data);
-        insightOutputEl.innerText = data.insight || "No insight generated.";
-        planOutputEl.innerText = data.plan || "No plan found.";
-      })
-      .catch(err => {
-        console.error("Insight/Plan Load Error:", err);
-        insightOutputEl.innerText = "Oops! Couldn’t load your insight.";
-        planOutputEl.innerText = "Oops! Couldn’t load your plan.";
-      });
-  }
+    .catch(err => {
+      console.error("Insight Load Error:", err);
+      insightOutputEl.innerText = "Oops! Couldn’t load your insight.";
+    });
+
+  // ✅ Call getPlan for static
+  fetch(`/.netlify/functions/getPlan?mbti=${mbtiResult}`)
+    .then(res => res.text())
+    .then(plan => {
+      console.log("getPlan returned:", plan);
+      planOutputEl.innerText = plan || "No plan found.";
+    })
+    .catch(err => {
+      console.error("Plan Load Error:", err);
+      planOutputEl.innerText = "Oops! Couldn’t load your plan.";
+    });
 });
