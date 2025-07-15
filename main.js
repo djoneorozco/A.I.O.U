@@ -113,7 +113,7 @@ function getOppositeAxis(axis) {
 }
 
 // ================================
-// #8 — Results: Insight + Static Plan
+// #8 — Results: Insight + Static Plan + Flyer Animation
 // ================================
 document.addEventListener('DOMContentLoaded', () => {
   const mbtiTypeEl = document.getElementById('mbtiType');
@@ -143,11 +143,12 @@ document.addEventListener('DOMContentLoaded', () => {
   if (flyerEl) {
     flyerEl.src = `images/${mbtiResult}.png`;
     flyerEl.alt = `${mbtiResult} Realtor Flyer`;
+    // ✅ Add the fade-in animation class!
+    flyerEl.classList.add('fade-in-top');
   }
 
   const customFields = JSON.parse(localStorage.getItem('customFields') || '{}');
 
-  // ✅ Call getInsight for dynamic
   fetch('/.netlify/functions/getInsight', {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -163,7 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
       insightOutputEl.innerText = "Oops! Couldn’t load your insight.";
     });
 
-  // ✅ Call getPlan for static
   fetch(`/.netlify/functions/getPlan?mbti=${mbtiResult}`)
     .then(res => res.text())
     .then(plan => {
