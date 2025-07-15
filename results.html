@@ -60,6 +60,24 @@
       white-space: pre-wrap;
       overflow-y: auto;
     }
+
+    /* Ensure the flyer has the fade-in-top animation */
+    .fade-in-top {
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: fadeInTop 5s ease forwards;
+    }
+
+    @keyframes fadeInTop {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 <body>
@@ -83,7 +101,7 @@
 
     <!-- Archetype Flyer -->
     <h2>Your Personal Brand Flyer:</h2>
-    <img id="archetypeFlyer" src="" alt="Your Realtor Flyer" class="flyer-image" style="max-width: 100%; margin: 20px 0; display: block;" />
+    <img id="archetypeFlyer" src="" alt="Your Realtor Flyer" class="flyer-image fade-in-top" style="max-width: 100%; margin: 20px 0; display: block;" />
 
     <!-- AI Insight -->
     <h2>Your Personalized AI Insight:</h2>
