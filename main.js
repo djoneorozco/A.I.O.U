@@ -120,7 +120,7 @@ function getOppositeAxis(axis) {
 }
 
 // ================================
-// #8 — Results: Load Flyer + Plan
+// #8 — Results: Load Flyer + AI Plan (Custom Fields)
 // ================================
 document.addEventListener('DOMContentLoaded', () => {
   const mbtiTypeEl = document.getElementById('mbtiType');
@@ -150,17 +150,24 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (gptOutputEl) {
-    fetch(`/.netlify/functions/getPlan?mbti=${mbtiResult}`)
-      .then(res => {
-        if (!res.ok) throw new Error("Plan not found");
-        return res.text();
+    const customFields = JSON.parse(localStorage.getItem('customFields') || '{}');
+
+    fetch('/.netlify/functions/gptHandler', {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        mbti: mbtiResult,
+        details,
+        customFields
       })
+    })
+      .then(res => res.json())
       .then(data => {
-        gptOutputEl.innerText = data || "No plan found.";
+        gptOutputEl.innerText = data.message || "No plan generated.";
       })
       .catch(err => {
-        console.error("Plan Load Error:", err);
-        gptOutputEl.innerText = "Oops! Couldn’t load your plan. Try again.";
+        console.error("GPT Handler Error:", err);
+        gptOutputEl.innerText = "Oops! Couldn’t get your plan. Try again.";
       });
   }
 });
