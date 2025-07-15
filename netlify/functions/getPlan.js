@@ -13,7 +13,7 @@ export async function handler(event) {
     }
 
     // ✅ Ensure it matches your plans folder and uses .md files
-    const planPath = path.join(process.cwd(), 'plans', `${mbti}.md`);
+    const planPath = path.join(process.cwd(), 'plans', `${mbti}.mb`);
 
     console.log("Looking for plan at:", planPath);
 
