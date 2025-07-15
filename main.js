@@ -126,14 +126,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const mbtiTypeEl = document.getElementById('mbtiType');
   const archetypeNameEl = document.getElementById('mbtiName');
   const archetypeDetailsEl = document.getElementById('mbtiDetails');
-  const aiInsightOutputEl = document.getElementById('aiInsightOutput');
-  const gptOutputEl = document.getElementById('gptOutput');
+  const insightOutputEl = document.getElementById('insightOutput');
+  const planOutputEl = document.getElementById('planOutput');
   const flyerEl = document.getElementById('archetypeFlyer');
 
   const mbtiResult = localStorage.getItem('mbtiResult') || 'Unknown';
   if (mbtiTypeEl) mbtiTypeEl.innerText = mbtiResult;
 
-  const details = mbtiMap[mbtiResult] || { name: "Unknown", strength: "—", market: "—", priceRange: "—", area: "—", vibe: "—" };
+  const details = mbtiMap[mbtiResult] || {
+    name: "Unknown", strength: "—", market: "—",
+    priceRange: "—", area: "—", vibe: "—"
+  };
+
   if (archetypeNameEl) archetypeNameEl.innerText = details.name;
   if (archetypeDetailsEl) {
     archetypeDetailsEl.innerHTML = `
@@ -152,7 +156,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const customFields = JSON.parse(localStorage.getItem('customFields') || '{}');
 
-  if (aiInsightOutputEl && gptOutputEl) {
+  if (insightOutputEl && planOutputEl) {
+    console.log("Fetching getInsight with:", { mbtiResult, details, customFields });
     fetch('/.netlify/functions/getInsight', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -164,13 +169,14 @@ document.addEventListener('DOMContentLoaded', () => {
     })
       .then(res => res.json())
       .then(data => {
-        aiInsightOutputEl.innerText = data.insight || "No insight generated.";
-        gptOutputEl.innerText = data.plan || "No plan found.";
+        console.log("getInsight returned:", data);
+        insightOutputEl.innerText = data.insight || "No insight generated.";
+        planOutputEl.innerText = data.plan || "No plan found.";
       })
       .catch(err => {
         console.error("Insight/Plan Load Error:", err);
-        aiInsightOutputEl.innerText = "Oops! Couldn’t load your insight.";
-        gptOutputEl.innerText = "Oops! Couldn’t load your plan.";
+        insightOutputEl.innerText = "Oops! Couldn’t load your insight.";
+        planOutputEl.innerText = "Oops! Couldn’t load your plan.";
       });
   }
 });
