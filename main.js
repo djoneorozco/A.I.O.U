@@ -95,7 +95,7 @@ function getOppositeAxis(axis) {
 }
 
 // ================================
-// #7 — Results: Load Flyer + Static Plan
+// #7 — Results: Load Flyer + Serve Plan from Netlify Function
 // ================================
 document.addEventListener('DOMContentLoaded', () => {
   const mbtiTypeEl = document.getElementById('mbtiType');
@@ -125,10 +125,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (gptOutputEl) {
-    fetch(`plans/${mbtiResult}.md`)
-      .then(res => res.text())
+    fetch(`/.netlify/functions/getPlan?mbti=${mbtiResult}`)
+      .then(res => {
+        if (!res.ok) throw new Error("Plan not found");
+        return res.text();
+      })
       .then(data => {
-        gptOutputEl.innerText = data;
+        gptOutputEl.innerText = data || "No plan found.";
       })
       .catch(err => {
         console.error("Plan Load Error:", err);
