@@ -143,8 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (flyerEl) {
     flyerEl.src = `images/${mbtiResult}.png`;
     flyerEl.alt = `${mbtiResult} Realtor Flyer`;
-    // ✅ Add the fade-in animation class!
-    flyerEl.classList.add('fade-in-top');
+    flyerEl.classList.add('fade-in-top'); // ✅ Fade-in animation
   }
 
   const customFields = JSON.parse(localStorage.getItem('customFields') || '{}');
