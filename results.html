@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>A.I.O.U — Your Realtor Archetype</title>
+  <title>BrandVoice — Your MBTI Brand Archetype</title>
   <link rel="stylesheet" href="style.css" />
   <style>
     body {
@@ -61,7 +61,7 @@
       overflow-y: auto;
     }
 
-    /* Ensure the flyer has the fade-in-top animation */
+    /* Fade-in flyer */
     .fade-in-top {
       opacity: 0;
       transform: translateY(-20px);
@@ -78,12 +78,33 @@
         transform: translateY(0);
       }
     }
+
+    .copy-box {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: -20px;
+      margin-bottom: 10px;
+    }
+
+    .copy-btn {
+      background: linear-gradient(135deg, #7f00ff, #e100ff);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+
+    .copy-btn:hover {
+      filter: brightness(1.2);
+    }
   </style>
 </head>
 <body>
   <div class="results-container">
-    <h1>A.I.O.U</h1>
-    <p class="tagline">AI Optimizing U — Realtor Personality Results</p>
+    <h1>BrandVoice</h1>
+    <p class="tagline">Your MBTI-Powered Business Personality Insight</p>
 
     <!-- MBTI Type -->
     <h2>Your Personality Type:</h2>
@@ -96,33 +117,45 @@
     <!-- Archetype Details -->
     <h2>Archetype Details:</h2>
     <div id="mbtiDetails" class="mbti-details">
-      Loading your unique strengths and niche...
+      Loading your business identity traits...
     </div>
 
     <!-- Archetype Flyer -->
-    <h2>Your Personal Brand Flyer:</h2>
-    <img id="archetypeFlyer" src="" alt="Your Realtor Flyer" class="flyer-image fade-in-top" style="max-width: 100%; margin: 20px 0; display: block;" />
+    <h2>Visual Persona Flyer:</h2>
+    <img id="archetypeFlyer" src="" alt="Your MBTI Flyer" class="flyer-image fade-in-top" style="max-width: 100%; margin: 20px 0; display: block;" />
 
     <!-- AI Insight -->
-    <h2>Your Personalized AI Insight:</h2>
+    <h2>🧠 Personality Insight:</h2>
     <div id="insightOutput" class="insight-output">
-      Generating your insight...
+      Generating deep insight...
+    </div>
+
+    <!-- Copy Button for Plan -->
+    <div class="copy-box">
+      <button class="copy-btn" onclick="copyPlan()">📋 Copy Plan</button>
     </div>
 
     <!-- Static Marketing Plan -->
-    <h2>Your Full Static Marketing Plan:</h2>
+    <h2>💼 Your Brand Strategy Plan:</h2>
     <div id="planOutput" class="plan-output">
-      Loading your customized plan...
+      Loading your personalized strategy...
     </div>
 
     <!-- CTA -->
     <p class="cta">
-      🔄 <a href="index.html">Take the test again</a> or 💼 <a href="https://yourrealtysass.com">Level up with RealtySaSS</a>
+      🔁 <a href="index.html">Try Again</a> | 🚀 <a href="https://realtysass.com">Explore More with RealtySaSS</a>
     </p>
   </div>
 
-  <!-- Marked.js for pretty Markdown rendering -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    function copyPlan() {
+      const planText = document.getElementById('planOutput').innerText;
+      navigator.clipboard.writeText(planText).then(() => {
+        alert('Plan copied to clipboard!');
+      });
+    }
+  </script>
   <script src="main.js"></script>
 </body>
 </html>
