@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BrandVoice — MBTI Startup Persona Quiz</title>
+  <title>A.I.O.U — Realtor Personality Quiz</title>
   <link rel="stylesheet" href="style.css" />
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: radial-gradient(ellipse at top, rgba(0,112,243,0.12), transparent),
-                  radial-gradient(ellipse at bottom, rgba(0,112,243,0.15), black);
-      background-color: #000;
+      background: radial-gradient(ellipse at top, rgba(128,0,255,0.15), transparent),
+                  radial-gradient(ellipse at bottom, rgba(128,0,255,0.15), black);
+      background-color: #000; /* solid fallback */
       color: #eee;
       min-height: 100vh;
       padding: 40px;
@@ -25,7 +25,7 @@
       padding: 40px;
       max-width: 700px;
       width: 100%;
-      box-shadow: 0 0 30px rgba(0, 112, 243, 0.25);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
       background: rgba(0,0,0,0.6);
       backdrop-filter: blur(12px);
     }
@@ -66,7 +66,7 @@
     }
 
     button {
-      background: linear-gradient(135deg, #0070f3, #00b0ff);
+      background: linear-gradient(135deg, #7f00ff, #e100ff);
       color: #fff;
       border: none;
       padding: 14px 30px;
@@ -85,7 +85,7 @@
       display: block;
       width: 100%;
       margin-bottom: 10px;
-      background: #00b0ff;
+      background: #0070f3;
     }
 
     #progress {
@@ -106,31 +106,34 @@
 
 <body>
   <div class="frame">
-    <h1>BrandVoice</h1>
-    <p class="tagline">MBTI for Startups — Discover Your Founder's Brand Strategy</p>
+    <h1>A.I.O.U</h1>
+    <p class="tagline">AI Optimizing U — Discover Your Realtor Archetype</p>
 
     <!-- ✅ Pre-Quiz Custom Fields -->
     <section id="customFields">
-      <h2>Your Startup Snapshot</h2>
-      <label>Startup Name:
-        <input type="text" id="startupName" placeholder="e.g. SaSSFlow AI" />
+      <h2>Tell Us About Your Business</h2>
+      <label>City & Primary Market:
+        <input type="text" id="city" placeholder="e.g. Austin, TX" />
       </label>
-      <label>Primary Industry:
-        <input type="text" id="industry" placeholder="e.g. PropTech, EdTech, B2B SaaS" />
+      <label>Years of Realtor Experience:
+        <input type="number" id="experience" placeholder="e.g. 5" />
       </label>
-      <label>Stage of Startup:
-        <input type="text" id="startupStage" placeholder="e.g. MVP, Seed, Series A" />
+      <label>Target Buyer Persona:
+        <input type="text" id="buyerPersona" placeholder="Investors, families, relocators?" />
       </label>
-      <label>Current Monthly Revenue ($):
-        <input type="number" id="currentRevenue" placeholder="e.g. 5000" />
+      <label>Current Annual Gross Commissions ($):
+        <input type="number" id="currentCommissions" placeholder="e.g. 120000" />
       </label>
-      <label>Target Buyer Type:
-        <input type="text" id="buyerType" placeholder="e.g. enterprise, creators, small biz" />
+      <label>2-Year Target Gross Commissions ($):
+        <input type="number" id="targetCommissions" placeholder="e.g. 250000" />
       </label>
-      <label>Biggest Strategic Challenge:
-        <input type="text" id="strategicChallenge" placeholder="e.g. scaling ads, brand identity" />
+      <label>Biggest Current Business Challenge:
+        <input type="text" id="biggestChallenge" placeholder="e.g. high-end listings, referrals" />
       </label>
-      <button id="startQuizBtn">Start My BrandVoice Quiz</button>
+      <label>Niche:
+        <input type="text" id="niche" placeholder="Luxury, VA loans, fix & flip, etc." />
+      </label>
+      <button id="startQuizBtn">Start My Quiz</button>
     </section>
 
     <!-- ✅ Quiz Section -->
@@ -141,7 +144,7 @@
     </section>
 
     <div class="cta">
-      <p>Powered by House of SaSS</p>
+      <p>Powered by RealtySaSS</p>
     </div>
   </div>
 
